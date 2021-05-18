@@ -1,0 +1,27 @@
+{
+  "name": "pp-felix-urrieta--back",
+  "version": "1.0.0",
+  "description": "server with nodejs and express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/f3l1/pp-felix-urrieta--back.git"
+  },
+  "author": "Felix Isidro Urrieta Velazquez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/f3l1/pp-felix-urrieta--back/issues"
+  },
+  "homepage": "https://github.com/f3l1/pp-felix-urrieta--back#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.9"
+  }
+}
