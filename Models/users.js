@@ -42,7 +42,7 @@ var userSchema = mongoose.Schema({
 });
 
 // Export User Model
-var User = module.exports = mongoose.model('user', userSchema);
+var User = module.exports = mongoose.model('User', userSchema);
 
 module.exports.get = function (callback, limit) {
     User.find(callback).limit(limit); 

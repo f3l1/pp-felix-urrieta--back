@@ -40,9 +40,12 @@ router.get('/createToken', function(req, res) {
 });
 
 // User routes
-router.route('/user')
-    .get(verifyToken, userController.index)
-    .post(verifyToken, userController.create);
+router.route('/user', verifyToken)
+    .get( userController.index)
+    .post( userController.create);
+
+    router.route('/user/:id')
+    .delete(userController.delete);
 
 //Export API routes
 module.exports = router;
