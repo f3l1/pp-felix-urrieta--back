@@ -29,7 +29,7 @@ router.get('/createToken', function(req, res) {
         email:"correo@ejemplo.com"
     }
 
-    jwt.sign( {user}, process.env.TOKEN_SECRET, {expiresIn:'35s'}, (err, token) => {
+    jwt.sign( {user}, process.env.TOKEN_SECRET, {expiresIn:'20s'}, (err, token) => {
        
         res.json({
             token
@@ -40,12 +40,16 @@ router.get('/createToken', function(req, res) {
 });
 
 // User routes
-router.route('/user', verifyToken)
-    .get( userController.index)
+router.route('/user')
+    .get(verifyToken, userController.index)
     .post( userController.create);
 
-    router.route('/user/:id')
+router.route('/user/:id')
     .delete(userController.delete);
+
+router.route('/userGroup')
+    .get( userController.userGroup);
+   
 
 //Export API routes
 module.exports = router;

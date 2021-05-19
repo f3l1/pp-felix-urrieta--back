@@ -95,7 +95,26 @@ exports.delete = async (req, res) => {
                 message: 'User Deleted'
             });
         });
-    
     }
+};
+
+exports.userGroup = async (req, res) =>{
     
+    let hoy = new Date();
+    let dia = 1000 * 60 * 60 * 24 * 3;
+    let oldDate = hoy.getTime() - dia; 
+    /* let newDate = new Date(oldDate);
+    console.log(newDate) */
+
+    User.find(
+        { age: {$gt: 18},  gender: 'Femenino', registrationDate: {$gt: oldDate}},
+        {name:1, phone:2, hobby:3, registrationDate:4},
+    function(err, user){
+        if (err)
+            res.send(err)
+        res.json({
+            status: "success",
+            data: user
+        });
+    });     
 };

@@ -1,6 +1,7 @@
 
 // Authorization: Bearer <token>
 function verifyToken (req, res, next){
+    
     const bearerHeader = req.header('authorization');
     
     if(typeof bearerHeader !== 'undefined'){
