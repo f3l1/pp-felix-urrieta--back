@@ -75,6 +75,31 @@ exports.create = async (req, res) => {
     });    
 };
 
+exports.searchNameHobby = async (req, res) => {
+
+    if(req.body.search == 'name'){    
+        let val = req.body.value
+        const newUser = await User.find({ name: val } );
+        
+        res.json({
+            status: "success",
+            data: newUser
+        });
+
+    }else{
+        let val = req.body.value
+        const newUser = await User.find({ hobby: val });
+
+        res.json({
+            status: "success",
+            data: newUser
+        });
+    }
+
+    
+
+};
+
 // Delete User
 exports.delete = async (req, res) => {
     
@@ -103,10 +128,34 @@ exports.userGroup = async (req, res) =>{
     let hoy = new Date();
     let dia = 1000 * 60 * 60 * 24 * 3;
     let oldDate = hoy.getTime() - dia; 
-    /* let newDate = new Date(oldDate);
-    console.log(newDate) */
+    let newDate = new Date(oldDate);
+    console.log(newDate)         
 
-    User.find(
+    User.aggregate([
+        {   $match: {
+                $and:[ 
+                    { age: {$gt: 18} },
+                    { gender: 'Femenino'},
+                    { registrationDate: {$gt: newDate} }
+                ] 
+            }
+        },
+        {
+            $group: { 
+                _id: '$hobby', 
+                data: { $push: {_id: "$_id",name:"$name", phone:"$phone", hobby:"$hobby" } }}
+        }
+    ],
+    function(err, user){
+        if (err)
+            res.send(err)
+        res.json({
+            status: "success",
+            data: user
+        });
+    });
+
+    /* User.find(
         { age: {$gt: 18},  gender: 'Femenino', registrationDate: {$gt: oldDate}},
         {name:1, phone:2, hobby:3, registrationDate:4},
     function(err, user){
@@ -116,5 +165,7 @@ exports.userGroup = async (req, res) =>{
             status: "success",
             data: user
         });
-    });     
+    }); */
+
+
 };

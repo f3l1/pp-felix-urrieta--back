@@ -6,30 +6,14 @@ let verifyToken = require('./auth');
 //Import User Controller
 const userController = require('../Controllers/userController');
 
-router.get('/',verifyToken, function(req, res) {
-
-    jwt.verify(req.token, process.env.TOKEN_SECRET, (error, authData) =>{
-        if(error){
-            res.sendStatus(403)
-
-        }else{
-            res.json({
-                status: 'API Works',
-                message: 'Welcome to FirstRest API'
-            });
-        }
-    });
-    
-});
-
-router.get('/createToken', function(req, res) {
+router.post('/createToken', function(req, res) {
 
     const user = {
         name:"Fulanito",
         email:"correo@ejemplo.com"
     }
 
-    jwt.sign( {user}, process.env.TOKEN_SECRET, {expiresIn:'20s'}, (err, token) => {
+    jwt.sign( {user}, process.env.TOKEN_SECRET, {expiresIn:'60s'}, (err, token) => {
        
         res.json({
             token
@@ -42,13 +26,16 @@ router.get('/createToken', function(req, res) {
 // User routes
 router.route('/user')
     .get(verifyToken, userController.index)
-    .post( userController.create);
+    .post(verifyToken, userController.create);
+
+router.route('/search')
+    .post(userController.searchNameHobby);
 
 router.route('/user/:id')
-    .delete(userController.delete);
+    .delete(verifyToken,userController.delete);
 
 router.route('/userGroup')
-    .get( userController.userGroup);
+    .get(verifyToken, userController.userGroup);
    
 
 //Export API routes
