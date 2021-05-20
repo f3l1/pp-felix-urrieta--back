@@ -29,7 +29,7 @@ router.route('/user')
     .post(verifyToken, userController.create);
 
 router.route('/search')
-    .post(userController.searchNameHobby);
+    .post(verifyToken, userController.searchNameHobby);
 
 router.route('/user/:id')
     .delete(verifyToken,userController.delete);
